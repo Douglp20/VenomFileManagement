@@ -48,6 +48,30 @@
       <HintPath>..\..\..\..\..\..\Windows\Microsoft.NET\Framework\v1.1.4322\Interop.Scripting.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Syncfusion.Compression.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.Compression.Base.19.4.0.56\lib\net46\Syncfusion.Compression.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DocIO.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.DocIO.WinForms.19.4.0.56\lib\net46\Syncfusion.DocIO.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.DocToPdfConverter.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.DocToPDFConverter.WinForms.19.4.0.56\lib\net46\Syncfusion.DocToPdfConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.ExcelToPdfConverter.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.ExcelToPdfConverter.WinForms.19.4.0.56\lib\net46\Syncfusion.ExcelToPdfConverter.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Licensing, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=632609b4d040f6b4, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.Licensing.19.4.0.56\lib\net46\Syncfusion.Licensing.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.OfficeChart.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.OfficeChart.Base.19.4.0.56\lib\net46\Syncfusion.OfficeChart.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.Pdf.WinForms.19.4.0.56\lib\net46\Syncfusion.Pdf.Base.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Base, Version=19.4460.0.56, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <HintPath>..\..\..\..\..\WindowApplication\Circuit\Circuit\Circuit\packages\Syncfusion.XlsIO.WinForms.19.4.0.56\lib\net46\Syncfusion.XlsIO.Base.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Windows.Forms" />
@@ -70,6 +94,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileManagement.vb" />
+    <Compile Include="modFile.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -85,6 +110,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="PdfConverter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -104,6 +130,7 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
 </Project>
