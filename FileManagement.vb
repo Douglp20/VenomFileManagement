@@ -1,8 +1,9 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Windows.Forms
+Imports System.Drawing
 Public Class FileManagement
-
+    Public Property Bitmap As Object
     Public Event ErrorMessage(ByVal errDesc As String, ByVal errNo As Integer, ByVal errTrace As String)
     Public Sub New()
     End Sub
@@ -13,19 +14,43 @@ Public Class FileManagement
         Length
         DirectoryName
     End Enum
-    Public Function WriteProperty(ByRef strValue As String, strfile As String)
+    Public Sub WriteProperty(ByRef Value As String, fileName As String)
 
         On Error GoTo Err
 
-        Dim fso As New Scripting.FileSystemObject
-        Dim ts As Scripting.TextStream
+        Dim sw As StreamWriter
+        Dim fs As FileStream = Nothing
 
-        ts = fso.CreateTextFile(strfile)
-        ts.WriteLine(strValue)
-        ts.Close()
+        If (Not File.Exists(fileName)) Then
+            fs = File.Create(fileName)
+            sw = File.AppendText(fileName)
+            sw.WriteLine(Value)
+        Else
+            sw = File.AppendText(fileName)
+            sw.WriteLine(Value)
+            sw.Close()
+        End If
 
 
-        Exit Function
+
+
+
+
+        'Dim fso As New Scripting.FileSystemObject
+        'Dim ts As Scripting.TextStream
+        'If Not System.IO.File.Exists(strfile) Then
+        '    ts = fso.CreateTextFile(strfile)
+        'Else
+        '    ts = fso.OpenTextFile(strfile)
+        'End If
+
+        'ts.WriteLine(strValue)
+        'ts.Close()
+
+
+
+
+        Exit Sub
 
 Err:
 
@@ -34,7 +59,7 @@ Err:
 
 
 
-    End Function
+    End Sub
 
     Public Function ReadProperty(ByRef strValue As String, strfile As String) As String
 
@@ -131,6 +156,7 @@ Err:
         Dim curLine As String
         Dim curSplit As Array
         Dim curSplitColNo As Integer = 0
+        Dim curSplitValue As String
         Dim fso As New Scripting.FileSystemObject
         Dim ts As Scripting.TextStream
         Dim row As Integer = 0
@@ -157,7 +183,8 @@ Err:
                     If row >= StartRow Then
                         lViewItem = New System.Windows.Forms.ListViewItem("")
                         For c As Integer = 0 To NoOfColumns - 1
-                            lViewItem.SubItems.Add(curSplit(c).ToString)
+                            curSplitValue = curSplit(c).ToString.Replace("""", "")
+                            lViewItem.SubItems.Add(curSplitValue)
                         Next
                         lvw.Items.Add(lViewItem)
                     End If
@@ -165,9 +192,6 @@ Err:
 
                 row = row + 1
             Loop
-
-
-
 
         End If
 
@@ -325,6 +349,7 @@ Err:
 
 
     End Function
+
     Public Function GetFile(Title As String, Filter As String, InitialDirectory As String) As String
 
 
@@ -353,7 +378,18 @@ Err:
         RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
 
     End Function
+    Public Sub OpenTextFile(FileName As String)
 
+        If System.IO.File.Exists(FileName) Then
+            Process.Start(FileName)
+        End If
+
+        Exit Sub
+Err:
+
+        Dim rtn As String = "The error occur within the module " + System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + Me.ToString() + "."
+        RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
+    End Sub
     Public Function GetFolder(Title As String, Filter As String, InitialDirectory As String) As String
 
 
