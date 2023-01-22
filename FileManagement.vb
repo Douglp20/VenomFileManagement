@@ -1,6 +1,7 @@
 ﻿Imports System.IO
 Imports System.Text
 Imports System.Windows.Forms
+
 Imports System.Drawing
 Public Class FileManagement
     Public Property Bitmap As Object
@@ -254,6 +255,81 @@ Err:
     End Sub
 
 
+
+
+    Public Function GetStreamImage(filePath As String) As Byte()
+
+
+        Dim ReturnfileByte = Nothing
+        Dim valueArray As New ArrayList
+        Dim contentType As String = String.Empty
+        On Error GoTo Err
+
+
+        valueArray = GetFileInfo(filePath)
+
+        If valueArray.Count > 0 Then
+            ' If CheckPictureExtensionIsValid(valueArray(modOrders.FileInfo.Extension)) Then
+
+            Dim shareOption As System.IO.FileShare
+                Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, shareOption)
+            Select Case valueArray(modFile.FileInfo.Extension)
+                Case ".jpg", ".png", ".gif"
+                    Dim numBytes As Long = fs.Length
+                    Dim br As New BinaryReader(fs)
+                    Dim NewByte As Byte() = br.ReadBytes(CInt(numBytes))
+                    br.Close()
+                    ReturnfileByte = NewByte
+                Case Else
+                    Dim dr As New BinaryReader(fs)
+                    Dim bytes As Byte() = dr.ReadBytes(fs.Length)
+                    dr.Close()
+                    ReturnfileByte = bytes
+            End Select
+
+        End If
+
+        Return ReturnfileByte
+
+
+        Exit Function
+Err:
+
+        Dim rtn As String = "The error occur within the module " + System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + Me.ToString() + "."
+        RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
+    End Function
+    Public Function GetStreamPDF(filePath As String) As Byte()
+
+
+        Dim ReturnfileBytes
+        On Error GoTo Err
+        Dim shareOption As System.IO.FileShare
+        Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, shareOption)
+
+
+
+        Dim numBytes As Long = fs.Length
+        Dim br As New BinaryReader(fs)
+        Dim NewByte As Byte() = br.ReadBytes(CInt(numBytes))
+        br.Close()
+        ReturnfileBytes = NewByte
+
+
+
+
+        Return ReturnfileBytes
+
+
+
+
+        Exit Function
+Err:
+
+        Dim rtn As String = "The error occur within the module " + System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + Me.ToString() + "."
+        RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
+    End Function
+
+
     Public Function GetStreamByteFromFile(filePath As String, ext As String) As Byte()
 
 
@@ -420,6 +496,43 @@ Err:
         RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
 
     End Function
+    Public Function GetFolder(Title As String, Filter As String) As String
+
+
+        Dim dialog As New OpenFileDialog()
+        Dim ReturnValue As String = String.Empty
+
+        On Error GoTo Err
+
+
+        dialog.Filter = Filter
+        dialog.Title = Title
+
+        If dialog.ShowDialog() = DialogResult.OK Then
+            Dim filePath As String = dialog.FileName
+            Dim curSplit As Array = filePath.Split("\")
+            For i As Integer = 0 To curSplit.Length - 1
+                If i = 0 Then
+                    ReturnValue = curSplit(i).ToString + "\"
+                Else
+                    If i = curSplit.Length - 2 Then
+                        Exit For
+                    Else
+                        ReturnValue = ReturnValue + curSplit(i).ToString + "\"
+                    End If
+                End If
+            Next
+        End If
+
+        Return ReturnValue
+
+        Exit Function
+Err:
+
+        Dim rtn As String = "The error occur within the module " + System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + Me.ToString() + "."
+        RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
+
+    End Function
 
     Public Function GetFilesFromFolder(pathName As String) As ArrayList
 
@@ -442,6 +555,7 @@ Err:
 
 
     End Function
+
     Public Sub OpenExplore(PathName As String)
 
         On Error GoTo Err
