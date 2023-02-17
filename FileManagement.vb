@@ -555,6 +555,41 @@ Err:
 
 
     End Function
+    Public Sub OpenByteImageFile(ByVal image As Byte(), PathName As String, fileName As String)
+
+        On Error GoTo Err
+        If CheckFolderExists(PathName) Then
+            CreateNewFolder(PathName)
+        End If
+
+        SaveByteToFile(PathName + "\" + fileName, image)
+
+        Process.Start(PathName + "\" + fileName)
+
+        Exit Sub
+
+Err:
+
+        Dim rtn As String = "The error occur within the module " + System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + Me.ToString() + "."
+        RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
+
+
+    End Sub
+    Public Sub OpenFile(PathName As String)
+
+        On Error GoTo Err
+
+        Process.Start(PathName)
+
+        Exit Sub
+
+Err:
+
+        Dim rtn As String = "The error occur within the module " + System.Reflection.MethodBase.GetCurrentMethod().Name + " : " + Me.ToString() + "."
+        RaiseEvent ErrorMessage(Err.Description, Err.Number, rtn)
+
+
+    End Sub
 
     Public Sub OpenExplore(PathName As String)
 
