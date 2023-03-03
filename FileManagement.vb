@@ -272,7 +272,7 @@ Err:
             ' If CheckPictureExtensionIsValid(valueArray(modOrders.FileInfo.Extension)) Then
 
             Dim shareOption As System.IO.FileShare
-                Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, shareOption)
+            Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite)
             Select Case valueArray(modFile.FileInfo.Extension)
                 Case ".jpg", ".png", ".gif"
                     Dim numBytes As Long = fs.Length
@@ -370,7 +370,8 @@ Err:
         Dim ReturnfileBytes
         On Error GoTo Err
         Dim shareOption As System.IO.FileShare
-        Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, shareOption)
+        ' Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, shareOption)
+        Dim fs = New System.IO.FileStream(filePath, System.IO.FileMode.Open, System.IO.FileAccess.Read, FileShare.ReadWrite)
 
         valueArray = GetFileInfo(filePath)
 
